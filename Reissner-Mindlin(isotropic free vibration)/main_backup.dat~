@@ -1,0 +1,53 @@
+	TYPE(SUBMAT) :: K
+    REAL*8 :: FAT_K(3*DOF,3*DOF), FAT_M(3*DOF, 3*DOF), M(INT(0.5*DOF*(DOF+1))), F(3*DOF), DD, W
+    INTEGER :: INDX(3*DOF)
+    REAL :: CPTS, CPTE
+    
+	 CALL CPU_TIME(CPTS)
+!    Get domain information and plot the domain
+     CALL GETDOMAIN(OMEGA)
+!    CALL PLOTDOMAIN()
+
+!    Get background mesh and plot the mesh
+     CALL GETBGMESH(OMEGA,BGMESH)
+     CALL PLOTBGMESH()
+
+!	 Check pu and special (interpolation) functions
+!	 CALL CHECKBASIS()     
+
+!    Assemble stiffness matrix and mass matrix
+     CALL STIF(K)
+     CALL MASS(M)
+	 
+!    Assemble load vector
+     CALL LOADVEC(F)
+	 
+!    Impose the boundary
+	 CALL IMPOSEBD(FAT_K, FAT_M, K, M, F)
+
+!	 Find the smallest eigenvale (Fundamental frequency)
+	 CALL PWMTD(FAT_K, FAT_M, W)
+
+	 PRINT*, ""
+	 PRINT*, "FUNDAMENTAL FREQUENCY : ", W*DSQRT(RHO / G(1))
+	 PRINT*, ""
+	 	 
+	 CALL CPU_TIME(CPTE)
+	 PRINT*, ""
+	 PRINT*, "ELLIPSED CPU TIME : ", CPTE - CPTS
+	 PRINT*, ""
+	 
+	 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	 REAL*8 :: A(4,4), M(4,4), K
+	 INTEGER :: I, J
+	 
+	 A = RESHAPE((/8, 4, -6, 2, 4, 16, 0, 4, -6, 0, 12, -2, 2, 4, -2, 18/), (/4,4/), ORDER=(/2,1/))
+	 M(:,:) = 0.0D0
+	 FORALL (I=1:4) M(I,I) = 1.0D0
+	 
+	 CALL PWMTD(A, M, K)
+	 
+	 PRINT*, K
+	 

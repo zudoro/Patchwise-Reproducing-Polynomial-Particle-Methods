@@ -1,0 +1,94 @@
+#########################################################
+
+# REPLACE the main_prg_name below with the name of
+# your main program without the ".f90" extension
+# REPLACE the module_name below with your module 
+# name without the ".f90" extension
+
+# PROGRAM NAME (no .f90)
+main=MAIN
+
+# MODULE NAME  (no .f90)
+mod1=NEWTYPE
+mod2=GLBVAR
+mod3=EXACTSOL
+mod4=PU
+mod5=INTERPOLATION
+mod6=GSQUAD
+mod7=BICGSTAB
+mod8=PLOT
+mod9=DOMAIN
+mod10=LOADFUNCTION
+mod11=PACKAGE
+mod12=EIGEN
+mod13=INTEGRATION
+mod14=ASSEMBLE
+mod15=BOUNDARY
+mod16=ERRORESTIMATE
+mod17=LUDECOMPOSITION
+#########################################################
+
+cmplr=gfortran
+
+objects1 = $(mod1).o $(mod2).o $(mod3).o $(mod4).o $(mod5).o $(mod6).o $(mod7).o $(mod8).o $(mod9).o $(mod10).o $(mod11).o $(mod12).o $(mod13).o $(mod14).o $(mod15).o $(mod16).o $(mod17).o $(main).o
+objects2 = $(mod1).f90 $(mod2).f90 $(mod3).f90 $(mod4).f90 $(mod5).f90 $(mod6).f90 $(mod7).f90 $(mod8).f90 $(mod9).f90 $(mod10).f90 $(mod11).f90 $(mod12).f90 $(mod13).f90 $(mod14).f90 $(mod15).f90 $(mod16).f90 $(mod17).f90
+
+$(main)   : $(objects1)
+	$(cmplr) -o $(main) $(objects1)
+
+$(mod1).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod2).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod3).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod4).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod5).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod6).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod7).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod8).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod9).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod10).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod11).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod12).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod13).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod14).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod15).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod16).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+
+$(mod17).o    : $(objects2)
+	$(cmplr) -c $(objects2)
+	
+$(main).o  : $(main).f90 $(objects2)
+	$(cmplr) -c $(objects2) $(main).f90
+
+clean :
+	rm -f *.mod *.pcl *.pc *.o $(main) *.inc *.vo *.d 
